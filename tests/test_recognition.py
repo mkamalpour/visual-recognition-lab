@@ -2,7 +2,12 @@ import unittest
 
 import numpy as np
 
-from recognition import build_classifier, evaluate_predictions, normalize_rows, rank
+from vision_workbench.recognition import (
+    build_classifier,
+    evaluate_predictions,
+    normalize_rows,
+    rank,
+)
 
 
 class RecognitionTests(unittest.TestCase):

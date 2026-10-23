@@ -11,7 +11,7 @@ def build():
         (
             "Synthetic equation walkthrough",
             "These small vectors verify the math; they are not image recognition or benchmark accuracy. Run from the repository directory.",
-            'import numpy as np\nfrom recognition import build_classifier, rank, evaluate_predictions\ntexts = [np.array([[1.,0.],[1.,.1]]), np.array([[0.,1.],[.1,1.]])]\nlabels = ["horizontal", "vertical"]\nprint("Two synthetic classes with two contextual vectors each")',
+            'import numpy as np\nfrom vision_workbench.recognition import build_classifier, rank, evaluate_predictions\ntexts = [np.array([[1.,0.],[1.,.1]]), np.array([[0.,1.],[.1,1.]])]\nlabels = ["horizontal", "vertical"]\nprint("Two synthetic classes with two contextual vectors each")',
         ),
         (
             "Contextual text classifier",
@@ -35,12 +35,17 @@ def build():
         ),
         (
             "Real model workflows",
-            "The app exposes genuine CLIP and supervised CNN workflows. Models load only on explicit action. Run cnn.py --help for training/prediction commands. Automatic paper-style VQA/LLM discovery and paper benchmark reproduction are outside this adaptation.",
+            "The app exposes genuine CLIP and supervised CNN workflows. Models load only on explicit action. Run python -m vision_workbench.cnn --help for training/prediction commands. Automatic paper-style VQA/LLM discovery and paper benchmark reproduction are outside this adaptation.",
             '# Start the actual interface in a terminal:\n# python -m streamlit run app.py --server.address 127.0.0.1\nprint("See README.md for model setup and verified execution limits.")',
         ),
     ]
     cells, namespace = [], {}
     for i, (title, explanation, source) in enumerate(sections):
+        if i == 0:
+            source = (
+                "from pathlib import Path\nimport sys\nproject = Path.cwd() if (Path.cwd() / 'vision_workbench').is_dir() else Path.cwd().parent\nsys.path.insert(0, str(project))\n"
+                + source
+            )
         cells.append(
             dict(
                 cell_type="markdown",
@@ -83,4 +88,8 @@ def build():
 
 
 if __name__ == "__main__":
-    Path("recognition_walkthrough.ipynb").write_bytes(build())
+    (
+        Path(__file__).resolve().parents[1]
+        / "notebooks"
+        / "recognition_walkthrough.ipynb"
+    ).write_bytes(build())

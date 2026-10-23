@@ -21,7 +21,7 @@ def build_model(width=64):
         import torch
     except ImportError as error:
         raise RuntimeError(
-            "Install requirements-models.txt in the project environment to use the CNN."
+            "Use notebooks/colab_workbench.ipynb for CNN work, or an existing environment with requirements/models.txt dependencies."
         ) from error
     from torch import nn
 
@@ -96,7 +96,7 @@ def train_cifar10(
         import torch
     except ImportError as error:
         raise RuntimeError(
-            "Install requirements-models.txt in the project environment to use the CNN."
+            "Use notebooks/colab_workbench.ipynb for CNN work, or an existing environment with requirements/models.txt dependencies."
         ) from error
     from torch.utils.data import DataLoader, Subset
     from torchvision.datasets import CIFAR10
@@ -213,7 +213,7 @@ def predict_image(image, checkpoint):
         import torch
     except ImportError as error:
         raise RuntimeError(
-            "Install requirements-models.txt in the project environment to use the CNN."
+            "Use notebooks/colab_workbench.ipynb for CNN work, or an existing environment with requirements/models.txt dependencies."
         ) from error
 
     if not Path(checkpoint).is_file():

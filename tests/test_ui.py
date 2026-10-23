@@ -6,7 +6,9 @@ from streamlit.testing.v1 import AppTest
 
 class InterfaceTests(unittest.TestCase):
     def test_startup_and_label_evaluation(self):
-        app = AppTest.from_file(str(Path(__file__).with_name("app.py"))).run(timeout=30)
+        app = AppTest.from_file(
+            str(Path(__file__).resolve().parents[1] / "app.py")
+        ).run(timeout=30)
         self.assertFalse(app.exception)
         self.assertEqual(len(app.tabs), 4)
         next(
@@ -29,7 +31,7 @@ class ReferenceTests(unittest.TestCase):
 
         from PIL import Image
 
-        from ui_helpers import image_variants, reference_images
+        from vision_workbench.ui_helpers import image_variants, reference_images
 
         def data(color, fmt):
             buffer = io.BytesIO()
@@ -50,7 +52,7 @@ class ReferenceTests(unittest.TestCase):
 
 class DescriptionTests(unittest.TestCase):
     def test_all_entries_validated_before_model_execution(self):
-        from ui_helpers import validate_descriptions
+        from vision_workbench.ui_helpers import validate_descriptions
 
         for invalid in ([], {"cat": []}, {"unused": [42]}, {"cat": ["prompt"] * 101}):
             with self.assertRaises(ValueError):

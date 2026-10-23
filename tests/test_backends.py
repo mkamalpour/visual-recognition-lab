@@ -14,7 +14,7 @@ class BackendTests(unittest.TestCase):
 
         import torch
 
-        from cnn import train_cifar10
+        from vision_workbench.cnn import train_cifar10
 
         accessed = {True: set(), False: set()}
 
@@ -64,7 +64,7 @@ class BackendTests(unittest.TestCase):
         import torch
         from PIL import Image
 
-        from cnn import CLASSES, build_model, predict_image
+        from vision_workbench.cnn import CLASSES, build_model, predict_image
 
         torch.set_num_threads(1)
         torch.manual_seed(42)

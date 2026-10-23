@@ -18,7 +18,7 @@ class CLIPEncoder:
             from transformers import CLIPModel, CLIPProcessor
         except ImportError as error:
             raise RuntimeError(
-                "Use colab_workbench.ipynb for CLIP, or an existing environment with the optional model dependencies."
+                "Use notebooks/colab_workbench.ipynb for CLIP, or an existing environment with the optional model dependencies."
             ) from error
         self.torch = torch
         cache_dir = str(
