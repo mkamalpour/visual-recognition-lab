@@ -1,0 +1,15 @@
+.venv/
+.model_cache/
+__pycache__/
+.ruff_cache/
+.ipynb_checkpoints/
+.env*
+.streamlit/secrets.toml
+data/
+checkpoints/
+outputs/
+*.pt
+*.pth
+*.safetensors
+*.csv
+*.log
