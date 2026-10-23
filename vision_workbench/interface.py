@@ -196,6 +196,11 @@ def main():
             "CNN channel width", options=[2, 4, 8, 16, 32, 64], value=16
         )
         download = st.checkbox("Download CIFAR-10 if missing")
+        training_inputs = {
+            "data_directory": data, "checkpoint": checkpoint,
+            "epochs": int(epochs), "batch_size": batch, "channel_width": width,
+            "download_allowed": download,
+        }
         if st.button("Train CNN", type="primary"):
             try:
                 from vision_workbench.cnn import train_cifar10
@@ -214,9 +219,17 @@ def main():
                         ),
                     )
                 st.session_state.training_result = result
+                st.session_state.completed_training_inputs = training_inputs.copy()
             except Exception as exc:
                 st.error(str(exc))
         if "training_result" in st.session_state:
+            recorded = st.session_state.get("completed_training_inputs")
+            st.subheader("Last completed training run")
+            if recorded != training_inputs:
+                st.info("Training settings changed. The report below belongs to the previous completed run, not the current controls. Train again to produce a new report.")
+            if recorded:
+                with st.expander("Settings used for this report"):
+                    st.json(recorded)
             st.json(st.session_state.training_result)
             st.download_button(
                 "Download training metrics",

@@ -60,3 +60,28 @@ class DescriptionTests(unittest.TestCase):
         self.assertEqual(
             validate_descriptions(["cat"], {"cat": ["a feline"]}), [["a feline"]]
         )
+
+
+class TrainingStateTests(unittest.TestCase):
+    def test_changed_controls_label_previous_report_without_training_models(self):
+        import sys
+        import types
+        from unittest.mock import patch
+        fake = types.ModuleType("vision_workbench.cnn")
+        fake.train_cifar10 = lambda *a, **kw: {"accuracy": 0.5, "epochs": kw["epochs"]}
+        with patch.dict(sys.modules, {"vision_workbench.cnn": fake}):
+            app = AppTest.from_file(str(Path(__file__).resolve().parents[1] / "app.py")).run(timeout=30)
+            next(b for b in app.button if b.label == "Train CNN").click().run()
+            self.assertFalse(app.exception)
+            self.assertEqual(app.session_state["completed_training_inputs"]["epochs"], 5)
+            next(n for n in app.number_input if n.label == "Epochs").set_value(8).run()
+            self.assertFalse(app.exception)
+            self.assertTrue(any("previous completed run" in item.value for item in app.info))
+            self.assertEqual(app.session_state["training_result"]["epochs"], 5)
+            def failure(*a, **kw):
+                raise ValueError("Synthetic failure; no model executed")
+            fake.train_cifar10 = failure
+            next(b for b in app.button if b.label == "Train CNN").click().run()
+            self.assertFalse(app.exception)
+            self.assertTrue(app.error)
+            self.assertEqual(app.session_state["training_result"]["epochs"], 5)

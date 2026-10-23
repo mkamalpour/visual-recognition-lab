@@ -43,3 +43,5 @@ python -m vision_workbench.cnn --help
 Optional Torch tests skip when Torch/torchvision are unavailable. No model downloads occur in tests. See [method and verification](docs/method-and-verification.md) for measured checks, existing Conda capabilities, model setup, privacy and known limitations. Model caches respect HF_HOME/HF_HUB_CACHE; the maintained local setup points these to F:\DevCache.
 
 Original personal documents, images, datasets, and model weights are excluded. No license has been selected.
+
+The CNN tab labels the last completed training report and records its settings. Changing controls marks the report as belonging to the previous run; a failed rerun preserves that report. Model-free UI checks use a simulated training callback, not real CNN execution. Latest Windows / existing Conda base checks: 11 passed, 2 optional backend tests skipped.
