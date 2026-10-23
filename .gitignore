@@ -13,3 +13,12 @@ outputs/
 *.safetensors
 *.csv
 *.log
+
+# Local secrets, caches and private runtime files
+.pytest_cache/
+.cache/
+*.db
+*.db-*
+*.sqlite*
+*.pem
+*.key
