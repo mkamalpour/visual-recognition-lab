@@ -17,13 +17,13 @@ from vision_workbench.ui_helpers import (
 
 
 def main():
-    st.set_page_config(page_title="Visual Recognition Workbench", layout="wide")
+    st.set_page_config(page_title="Visual Recognition Lab", layout="wide")
     st.markdown(
         """<style>.stApp{background:#f6f3ec;color:#202b2e}.block-container{padding-top:3.5rem;max-width:1200px}h1{font-family:Georgia,serif;font-size:3rem!important;letter-spacing:-1px}h2,h3{color:#176963}button[kind=primary]{background:#176963}div[data-testid=stMetric]{border-top:3px solid #d97859;padding:12px 0}div[data-baseweb=tab-list]{gap:18px;overflow-x:auto}button[data-baseweb=tab]{white-space:nowrap}@media(max-width:600px){h1{font-size:2rem!important}.block-container{padding:3rem 1rem 1rem}}</style>""",
         unsafe_allow_html=True,
     )
     st.caption("VISION / RESEARCH STUDIO")
-    st.title("Visual Recognition Workbench")
+    st.title("Visual Recognition Lab")
     st.write(
         "Explore image recognition, inspect the method, and train a small convolutional network."
     )

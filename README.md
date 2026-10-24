@@ -1,6 +1,10 @@
-# Visual Recognition Workbench
+# Visual Recognition Lab
 
-Educational CLIP recognition and supervised CIFAR-10 CNN training, adapted from an E-FineR university project. Candidate names are supplied by the user; automatic vocabulary discovery and paper benchmark accuracy are not claimed.
+Explore how CLIP matches an image to candidate descriptions, and how a supervised CNN learns CIFAR-10 classes. The local app includes lightweight recognition-math tools; model downloads and training belong in the optional Colab workflow. This is a university project, not a reproduction of the paper benchmark.
+
+## Try it first
+
+Start with the equation walkthrough in `notebooks/recognition_walkthrough.ipynb`, which uses small synthetic inputs. For real image recognition, use already-cached CLIP weights or the Colab guide below. Candidate labels come from you; the app does not discover an unrestricted vocabulary.
 
 ## Run locally
 
@@ -12,6 +16,8 @@ python -m streamlit run app.py --server.address 127.0.0.1
 ```
 
 After activation, `run.bat` runs the same command. The `ml` environment supports the lightweight interface and equation workflows too. Missing model packages or weights require Colab; they are never replaced with fabricated predictions.
+
+On Windows, `run.bat --check` checks the active environment without opening the app. Run `run.bat` to start, or `run.bat --server.port 8502` if another app is using the default port. The launcher works from any working directory and installs nothing.
 
 ## Heavy work in Colab
 
@@ -42,6 +48,6 @@ python -m vision_workbench.cnn --help
 
 Optional Torch tests skip when Torch/torchvision are unavailable. No model downloads occur in tests. See [method and verification](docs/method-and-verification.md) for measured checks, existing Conda capabilities, model setup, privacy and known limitations. Model caches respect HF_HOME/HF_HUB_CACHE; the maintained local setup points these to F:\DevCache.
 
-Original personal documents, images, datasets, and model weights are excluded. No license has been selected.
+Original personal documents, images, datasets, and model weights are excluded.
 
 The CNN tab labels the last completed training report and records its settings. Changing controls marks the report as belonging to the previous run; a failed rerun preserves that report. Model-free UI checks use a simulated training callback, not real CNN execution. Latest Windows / existing Conda base checks: 11 passed, 2 optional backend tests skipped.

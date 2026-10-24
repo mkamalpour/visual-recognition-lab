@@ -1,4 +1,4 @@
-# Visual Recognition Workbench
+# Visual Recognition Lab
 
 An educational visual-recognition application based on a university E-FineR study project. It separates pretrained CLIP image–text recognition from supervised CIFAR-10 CNN training. This repository is an adaptation, not a reproduction of the paper's benchmark results.
 
