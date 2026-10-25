@@ -4,6 +4,8 @@ import numpy as np
 
 
 def normalize_rows(values):
+    if np.iscomplexobj(values):
+        raise ValueError("Embeddings must be real; complex components cannot be discarded.")
     array = np.asarray(values, dtype=np.float64)
     if array.ndim != 2 or not array.shape[0] or not array.shape[1]:
         raise ValueError("Expected a nonempty two-dimensional embedding array.")
@@ -62,6 +64,8 @@ def build_classifier(
     if augmented_embeddings is None:
         augmented = refs[:, None, :]
     else:
+        if np.iscomplexobj(augmented_embeddings):
+            raise ValueError("Augmented embeddings must be real.")
         augmented = np.asarray(augmented_embeddings, dtype=float)
         if (
             augmented.ndim != 3
@@ -98,7 +102,7 @@ def rank(query, classifier, labels, top_k=3, temperature=0.07):
         raise ValueError("temperature must be finite and positive.")
     if isinstance(top_k, bool) or not isinstance(top_k, (int, np.integer)) or top_k < 1:
         raise ValueError("top_k must be a positive integer.")
-    query = np.asarray(query, dtype=float)
+    query = np.asarray(query)
     if query.ndim == 1:
         query = query[None, :]
     query = normalize_rows(query)
@@ -106,7 +110,9 @@ def rank(query, classifier, labels, top_k=3, temperature=0.07):
     if len(query) != 1 or query.shape[1] != weights.shape[1]:
         raise ValueError("Supply one query with the classifier dimension.")
     indices = np.asarray(classifier["indices"])
-    if len(indices) != len(weights) or any(i < 0 or i >= len(labels) for i in indices):
+    if (indices.ndim != 1 or not np.issubdtype(indices.dtype, np.integer)
+            or len(indices) != len(weights) or len(np.unique(indices)) != len(indices)
+            or any(i < 0 or i >= len(labels) for i in indices)):
         raise ValueError("Classifier indices do not match labels.")
     similarity = (query @ weights.T)[0]
     logits = (similarity - similarity.max()) / temperature

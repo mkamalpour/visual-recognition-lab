@@ -1,5 +1,7 @@
 # Visual Recognition Lab
 
+[Explore the interactive project presentation](docs/overview.html).
+
 Explore how CLIP matches an image to candidate descriptions, and how a supervised CNN learns CIFAR-10 classes. The local app includes lightweight recognition-math tools; model downloads and training belong in the optional Colab workflow. This is a university project, not a reproduction of the paper benchmark.
 
 ## Try it first
@@ -50,4 +52,6 @@ Optional Torch tests skip when Torch/torchvision are unavailable. No model downl
 
 Original personal documents, images, datasets, and model weights are excluded.
 
-The CNN tab labels the last completed training report and records its settings. Changing controls marks the report as belonging to the previous run; a failed rerun preserves that report. Model-free UI checks use a simulated training callback, not real CNN execution. Latest Windows / existing Conda base checks: 11 passed, 2 optional backend tests skipped.
+The CNN tab labels the last completed training report and records its settings. Changing controls marks the report as belonging to the previous run; a failed rerun preserves that report. Model-free UI checks use a simulated training callback, not real CNN execution. Latest Windows / existing Conda base checks: 14 passed, 2 optional backend tests skipped.
+
+Embedding validation rejects complex-valued inputs before conversion and checks classifier index shape, integer type, uniqueness and label bounds before ranking.
