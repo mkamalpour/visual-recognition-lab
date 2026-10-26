@@ -11,16 +11,18 @@ Start with the equation walkthrough in `notebooks/recognition_walkthrough.ipynb`
 <details>
 <summary>Using the existing managed Windows workspace</summary>
 
-Assigned environment: **base** — Python **3.13.5**, using the existing Conda environment `base`. Open `Workspaces/visual-recognition-lab.code-workspace` from the workspace folder to select its interpreter.
-
-From this repository folder in PowerShell:
+Assigned environment: **base**. From this repository folder in PowerShell:
 
 ```powershell
-& '..\Launchers\visual-recognition-lab.cmd' --check --deep
-& '..\Launchers\visual-recognition-lab.cmd'
+.\run.cmd --check
+.\run.cmd
 ```
 
-The launcher activates the assigned environment and checks dependencies. It does not install packages or download models. These launchers belong to the managed parent workspace; for a standalone clone, follow the setup instructions below in your own compatible environment. Keep optional model/provider prerequisites separate from the offline examples.
+The repo-local launcher selects `G:\AnaConda\install`
+and imports required startup modules. It installs nothing and downloads
+no models. On a standalone clone where that interpreter is absent, it uses your
+active `python`; activate a compatible environment first. `--check` reports the
+actual interpreter; it does not validate optional models or every workflow.
 
 </details>
 
@@ -71,3 +73,6 @@ Original personal documents, images, datasets, and model weights are excluded.
 The CNN tab labels the last completed training report and records its settings. Changing controls marks the report as belonging to the previous run; a failed rerun preserves that report. Model-free UI checks use a simulated training callback, not real CNN execution. Latest Windows / existing Conda base checks: 14 passed, 2 optional backend tests skipped.
 
 Embedding validation rejects complex-valued inputs before conversion and checks classifier index shape, integer type, uniqueness and label bounds before ranking.
+
+See the [engineering audit](docs/ENGINEERING_AUDIT.md) for the dated test baseline,
+project assessment, environment assignment and remaining work.
