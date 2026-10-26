@@ -76,3 +76,9 @@ Embedding validation rejects complex-valued inputs before conversion and checks 
 
 See the [engineering audit](docs/ENGINEERING_AUDIT.md) for the dated test baseline,
 project assessment, environment assignment and remaining work.
+
+## Additional workflow improvements
+
+Per-class precision/recall/F1, balanced accuracy, macro F1 and confused-label diagnostics with downloadable JSON and stale-result protection.
+
+Evaluation & method → Evaluate labelled predictions → Download evaluation report.

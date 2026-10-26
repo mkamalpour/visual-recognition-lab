@@ -290,15 +290,38 @@ def main():
         )
         expected = st.text_area("Expected labels, one per line", "cat\ndog\ncat")
         predicted = st.text_area("Predicted labels, one per line", "cat\ncat\ncat")
+        evaluation_key = (expected, predicted)
         if st.button("Evaluate labelled predictions"):
             try:
-                truth = expected.splitlines()
-                pred = predicted.splitlines()
+                truth = [line.strip() for line in expected.splitlines()]
+                pred = [line.strip() for line in predicted.splitlines()]
+                if any(not label for label in truth + pred):
+                    raise ValueError('Remove blank label rows; each row must identify one sample.')
                 result = evaluate_predictions(truth, pred, sorted(set(truth + pred)))
-                st.metric("Exact accuracy", f"{result['accuracy']:.1%}")
-                st.json(result)
+                st.session_state.evaluation_result = (evaluation_key, result)
             except Exception as exc:
                 st.error(str(exc))
+        evaluation_saved = st.session_state.get('evaluation_result')
+        if evaluation_saved and evaluation_saved[0] == evaluation_key:
+            result = evaluation_saved[1]
+            a, b, c = st.columns(3)
+            a.metric('Exact accuracy', f"{result['accuracy']:.1%}")
+            b.metric('Balanced accuracy', f"{result['balanced_accuracy']:.1%}")
+            c.metric('Macro F1', f"{result['macro_f1']:.1%}")
+            st.caption(result['metric_policy'])
+            st.subheader('Per-class results')
+            st.dataframe(result['per_class'], hide_index=True)
+            st.subheader('Confused label pairs')
+            if result['errors']:
+                st.dataframe(result['errors'], hide_index=True)
+            else:
+                st.success('All supplied predictions match their expected labels.')
+            st.download_button('Download evaluation report', json.dumps(result, indent=2),
+                               'recognition-evaluation.json', 'application/json')
+            with st.expander('Confusion matrix (rows = expected, columns = predicted)'):
+                st.json(dict(labels=result['labels'], confusion=result['confusion']))
+        elif evaluation_saved:
+            st.info('Evaluation inputs changed. Evaluate again to refresh the report and export.')
         with st.expander("Inspect a synthetic vector example"):
             st.caption(
                 "Synthetic vectors only: this does not recognize images or measure model quality."

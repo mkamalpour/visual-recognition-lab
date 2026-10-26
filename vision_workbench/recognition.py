@@ -144,9 +144,27 @@ def evaluate_predictions(expected, predicted, labels):
         if truth not in lookup or guess not in lookup:
             raise ValueError("Unknown evaluation label.")
         confusion[lookup[truth], lookup[guess]] += 1
+    per_class = []
+    for index, label in enumerate(labels):
+        tp = int(confusion[index, index])
+        support, guesses = int(confusion[index].sum()), int(confusion[:, index].sum())
+        precision = tp / guesses if guesses else 0.0
+        recall = tp / support if support else 0.0
+        per_class.append(dict(label=label, support=support, predicted_count=guesses,
+                              precision=precision, recall=recall,
+                              f1=2 * tp / (support + guesses) if support + guesses else 0.0))
+    mistakes = [dict(expected=labels[i], predicted=labels[j], count=int(confusion[i, j]))
+                for i in range(len(labels)) for j in range(len(labels))
+                if i != j and confusion[i, j]]
+    mistakes.sort(key=lambda item: -item['count'])
     return dict(
         accuracy=float(np.trace(confusion) / len(expected)),
         confusion=confusion.tolist(),
         labels=labels,
         count=len(expected),
+        per_class=per_class,
+        macro_f1=float(np.mean([row['f1'] for row in per_class])),
+        balanced_accuracy=float(np.mean([row['recall'] for row in per_class if row['support']])),
+        errors=mistakes,
+        metric_policy='Zero denominators produce 0; macro F1 includes all declared labels; balanced accuracy includes supported truth labels only.',
     )

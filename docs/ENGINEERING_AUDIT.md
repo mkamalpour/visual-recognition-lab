@@ -26,7 +26,7 @@ VS Code's local interpreter settings were aligned with the same assignment.
 
 ## Verification
 
-- **Automated tests:** 14 passed. 2 optional backend tests skipped.
+- **Automated tests:** 16 passed; 2 reported skips; 0 private-report cases deselected.
 - **Startup check:** `run.cmd --check` passed from outside the repository;
   required startup modules were imported in the assigned environment.
 - **Tested runtime:** Windows; Conda base; Python 3.13.5.
@@ -50,7 +50,7 @@ python -m pytest tests -q -p no:cacheprovider
 
 1. Small labelled evaluation packs.
 2. Cached-model readiness summary.
-3. Exportable confusion and error analysis.
+3. Representative image evaluation with a shareable labelled dataset.
 
 Expected benefit: clearer decisions, more reproducible workflows and stronger evidence
 for quality. These are proposed upgrades, not implemented features or measured speedups.
@@ -58,3 +58,17 @@ for quality. These are proposed upgrades, not implemented features or measured s
 External assets: Cached CLIP/CNN weights and labelled images are needed for genuine model evaluation.
 
 No root license file is set. No license was selected or changed.
+
+## Additional implementation pass
+
+Per-class precision/recall/F1, balanced accuracy, macro F1 and confused-label diagnostics with downloadable JSON and stale-result protection.
+
+Use: Evaluation & method → Evaluate labelled predictions → Download evaluation report.
+
+Verification: the complete offline suite passed in the assigned **base**
+environment after this change (16 tests). Regression fixtures remain
+temporary/synthetic. Optional real-model/data quality and external integrations
+remain unverified. No packages, models or additional environments were installed.
+
+The earlier numeric scores are subjective historical assessments; new features do
+not automatically establish a higher score or production readiness.
