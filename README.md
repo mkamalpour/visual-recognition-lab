@@ -8,6 +8,22 @@ Explore how CLIP matches an image to candidate descriptions, and how a supervise
 
 Start with the equation walkthrough in `notebooks/recognition_walkthrough.ipynb`, which uses small synthetic inputs. For real image recognition, use already-cached CLIP weights or the Colab guide below. Candidate labels come from you; the app does not discover an unrestricted vocabulary.
 
+<details>
+<summary>Using the existing managed Windows workspace</summary>
+
+Assigned environment: **base** — Python **3.13.5**, using the existing Conda environment `base`. Open `Workspaces/visual-recognition-lab.code-workspace` from the workspace folder to select its interpreter.
+
+From this repository folder in PowerShell:
+
+```powershell
+& '..\Launchers\visual-recognition-lab.cmd' --check --deep
+& '..\Launchers\visual-recognition-lab.cmd'
+```
+
+The launcher activates the assigned environment and checks dependencies. It does not install packages or download models. These launchers belong to the managed parent workspace; for a standalone clone, follow the setup instructions below in your own compatible environment. Keep optional model/provider prerequisites separate from the offline examples.
+
+</details>
+
 ## Run locally
 
 Use an existing Conda environment. No installation, download, or new environment is performed automatically.
